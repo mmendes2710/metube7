@@ -11,7 +11,9 @@ session_start();
 <body>
 
 <form method="post" action="media_upload_process.php" enctype="multipart/form-data" >
- 
+	<?php
+print_r($_SESSION);
+?>
   <p style="margin:0; padding:0">
   <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
    Add a Media: <label style="color:#663399"><em> (Each file limit 10M)</em></label><br/>

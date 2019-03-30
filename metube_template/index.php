@@ -40,7 +40,6 @@ if(isset($_POST['register'])){
 			<td width="80%"><input class="text"  type="password" name="password"><br /></td>
 		</tr>
 		<tr>
-        
 			<td><input name="submit" type="submit" value="Login"><input name="reset" type="reset" value="Reset"><input name="register" type="submit" value="Register"><br /></td>
 		</tr>
 	</table>

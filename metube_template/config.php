@@ -1,7 +1,7 @@
 <?php
 
-$dbhost = "127.0.0.1";
+$dbhost = "localhost";
 $dbuser = "root";
-$dbpass = "password";
-$database = "chris-practicedb";
+$dbpass = "";
+$database = "metube7";
 ?>

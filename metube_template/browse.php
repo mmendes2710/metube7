@@ -30,6 +30,7 @@ function saveDownload(id)
 <p>Welcome <?php echo $_SESSION['username'];?></p>
 <a href= <?php session_destroy();?> >Logout</a>
 <a href='media_upload.php'  style="color:#FF9900;">Upload File</a>
+<a href='profile.php' style="color:#FF9900;">Your Profile</a>
 <div id='upload_result'>
 <?php 
 	if(isset($_REQUEST['result']) && $_REQUEST['result']!=0)
