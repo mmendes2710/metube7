@@ -1,6 +1,7 @@
 ﻿<?php
-	session_start();
+session_start();
 	echo "Session ID: ", session_id(), "<br>";
+	echo session_save_path(), "<br>";
 	include_once "function.php";
 	if(!isset($_SESSION['username']) || $_SESSION['username'] == ""){
 		echo "Error: username variable not loaded";
@@ -16,6 +17,46 @@
 	<?php
 		print_r($_SESSION);
 	?>
-	<p>Welcome</p>
+	<p>Welcome <?php echo $_SESSION['username'];?></p>
+	<a href='browse.php' style="color:#FF9900;">Browse Media</a>
+
+	<br/><br/>
+
+<?php
+		if(isset($_POST['addContact'])){
+		header('Location: addContact.php');
+		}
+	?>
+<?php
+	$thisUser=$_SESSION['username'];
+	$query = "SELECT * FROM `contacts` WHERE username = '$thisUser'"; 
+	$result = mysql_query( $query );
+	if (!$result)
+	{
+	   die ("Could not query the contacts table in the database: <br />". mysql_error());
+	}
+?>
+	<div style="background:#339900;color:#FFFFFF; width:150px;">Contact List</div>
+	<table width="50%" cellpadding="0" cellspacing="0">
+		<?php
+			while ($result_row = mysql_fetch_row($result))
+			{ 
+		?>
+        <tr valign="top">
+			
+            <td>
+            	<?php echo $result_row[1];?> 
+            </td>
+            <td>
+            	<?php echo $result_row[2];?>
+            </td>
+			
+		</tr>
+        <?php
+			}
+		?>
+	</table>
+	<br><input name="addContact" type="submit" value="Add Contact"><br />
+	
 </body>
 </html>

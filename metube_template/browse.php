@@ -1,11 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
 	session_start();
+	echo "Session ID: ", session_id(), "<br>";
 	include_once "function.php";
-	if(!isset($_SESSION['username']) || $_SESSION['username'] == ""){
+	if(!isset($_SESSION["username"]) || $_SESSION["username"] == ""){
 		header('Location: index.php');
 	}
 ?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -43,7 +45,6 @@ function saveDownload(id)
 </div>
 <br/><br/>
 <?php
-
 
 	$query = "SELECT * from media"; 
 	$result = mysql_query( $query );

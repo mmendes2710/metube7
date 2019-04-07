@@ -1,15 +1,15 @@
-<link rel="stylesheet" type="text/css" href="css/default.css" />
 <?php
 session_start();
-
 include_once "function.php";
-
+?>
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+<?php
 if(isset($_POST['submit'])) {
 		if($_POST['username'] == "" || $_POST['password'] == "") {
 			echo "<script>alert('One or more forms are missing!')</script>";  
 		}
 		else {
-			$check = user_pass_check($_POST['username'],$_POST['password']); // Call functions from function.php
+			$check = user_pass_check($_POST['username'], $_POST['password']); // Call functions from function.php
 			if($check == 1) {
 				echo "<script>alert('Username not found!')</script>";  
 			}
@@ -17,8 +17,8 @@ if(isset($_POST['submit'])) {
 				echo "<script>alert('Password is incorrect!')</script>";  
 			}
 			else if($check==0){
-				$_SESSION['username']=$_POST['username']; //Set the $_SESSION['username']
-				header('Location: browse.php');
+				$_SESSION["username"]=$_POST["username"]; //Set the $_SESSION['username']
+				header('Location: profile.php');
 			}		
 		}
 }
