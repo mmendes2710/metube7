@@ -22,20 +22,22 @@ session_start();
 
 	<br/><br/>
 
-<?php
+	<?php
 		if(isset($_POST['addContact'])){
-		header('Location: addContact.php');
+			header('Location: addContact.php');
 		}
 	?>
-<?php
-	$thisUser=$_SESSION['username'];
-	$query = "SELECT * FROM `contacts` WHERE username = '$thisUser'"; 
-	$result = mysql_query( $query );
-	if (!$result)
-	{
-	   die ("Could not query the contacts table in the database: <br />". mysql_error());
-	}
-?>
+	<?php
+		$thisUser=$_SESSION['username'];
+		$query = "SELECT * FROM `contacts` WHERE username = '$thisUser'"; 
+		$result = mysql_query( $query );
+		if (!$result)
+		{
+			die ("Could not query the contacts table in the database: <br />". mysql_error());
+		}
+	?>
+
+	<!-- Show the contact list -->
 	<div style="background:#339900;color:#FFFFFF; width:150px;">Contact List</div>
 	<table width="50%" cellpadding="0" cellspacing="0">
 		<?php
@@ -56,7 +58,11 @@ session_start();
 			}
 		?>
 	</table>
-	<br><input name="addContact" type="submit" value="Add Contact"><br />
+
+	<form method="post" action="<?php echo "profile.php"; ?>">
+		<br><input name="addContact" type="submit" value="Add Contact"><br />
+	</form>
+	
 	
 </body>
 </html>
