@@ -1,5 +1,7 @@
 <?php
 	session_start();
+	echo "Session ID: ", session_id(), "<br>";
+	echo session_save_path(), "<br>";
 	include_once "function.php";
 ?>
 <!--

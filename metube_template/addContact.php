@@ -15,7 +15,7 @@ session_start();
     <title></title>
 </head>
 <body>
-	<p>Add a new contact</p>
+	<h3>Add a new contact</h3>
 
 	<?php
 		$thisUser=$_SESSION['username'];
@@ -50,7 +50,7 @@ session_start();
 	</br>
 
 	<!-- Add a new contact to the user's contact list' -->
-	<form method="post" action="<?php echo "profile.php"; ?>">
+	<form method="post" action="<?php echo "new_contact_process.php"; ?>">
 		<table width="100%">
 			<tr>
 				<td  width="20%">New Contact Username:</td>
@@ -59,17 +59,23 @@ session_start();
 			<tr>
 				<td  width="20%">Select new contact type:</td>
 				<td>
-					<select>
-						<option value="contact">Contact</option>
-						<option value="friend">Friend</option>
-						<option value="foe">Foe</option>
-						<option value="family">Family</option>
-						<option value="favorite">Favorite</option>
-						<option value="blocked">Blocked</option>
+					<select name="contactType">
+						<option value="Contact" selected hidden="hidden">Choose here</option>
+						<option value="Contact">Contact</option>
+						<option value="Friend">Friend</option>
+						<option value="Foe">Foe</option>
+						<option value="Family">Family</option>
+						<option value="Favorite">Favorite</option>
+						<option value="Blocked">Blocked</option>
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<td><input type="submit" value="Submit" name="submit"></td>
+			</tr>
 		</table>
 	</form>
+	</br>
+	<a href='profile.php' style="color:#FF9900;">Return to your Profile</a></br>
 </body>
 </html>

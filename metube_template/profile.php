@@ -17,7 +17,7 @@ session_start();
 	<?php
 		print_r($_SESSION);
 	?>
-	<p>Welcome <?php echo $_SESSION['username'];?></p>
+	<h3>Welcome to your profile page <?php echo $_SESSION['username'];?></h3>
 	<a href='browse.php' style="color:#FF9900;">Browse Media</a>
 
 	<br/><br/>

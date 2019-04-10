@@ -16,7 +16,7 @@
 			}
 			else if($check==0){
 				$_SESSION["username"]=$_POST["username"]; //Set the $_SESSION['username']
-                //header('Location: ');
+                header('Location: browse.php');
                 echo "<script>alert('CORRECT!!!')</script>"; 
 			}		
 		}
