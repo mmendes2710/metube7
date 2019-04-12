@@ -5,7 +5,7 @@ function user_pass_check($username, $password)
 {
 	
 	$query = "select * from account where username='$username'";
-	$result = mysql_query( $query );
+	$result = @mysql_query( $query );
 		
 	if (!$result)
 	{
@@ -13,6 +13,8 @@ function user_pass_check($username, $password)
 	}
 	else{
 		$row = mysql_fetch_row($result);
+
+		if($row == 0) return 1;
 		
 		if(strcmp($row[1],$password))
 			return 2; //wrong password
@@ -77,7 +79,6 @@ function upload_error($result)
 		return  "Upload file failed";
 	}
 }
-
 
 function account_exists($username)
 {
@@ -145,5 +146,38 @@ function other()
 {
 	//You can write your own functions here.
 }
+
+function send_message($to,$from,$message){
+	$query = "INSERT INTO messages VALUES('$to','$from','$message',NOW())";
+	$insert = mysql_query($query);
+	if($insert == 1){
+		return 1;
+	}
+	else{
+		die("Could not query database".mysql_error());
+	}
+}
+function send_comment($mediaId, $userId, $comment){
+	$query = "INSERT INTO comments VALUES('$mediaId','$userId','$comment',NOW())";
+	$insert = mysql_query($query);
+	if($insert == 1){
+		return 1;
+	}
+	else{
+		die("Could not query database".mysql_error());
+	}
+}
+function send_discussion($discussionid, $userId, $post){
+	$query = "INSERT INTO dicussion VALUES('$discussionid','$userId','$post',NOW())";
+	$insert = mysql_query($query);
+	if($insert == 1){
+		return 1;
+	}
+	else{
+		die("Could not query database".mysql_error());
+	}
+}
+
+
 	
 ?>
