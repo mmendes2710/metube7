@@ -168,7 +168,7 @@ function send_comment($mediaId, $userId, $comment){
 	}
 }
 function send_discussion($discussionid, $userId, $post){
-	$query = "INSERT INTO dicussion VALUES('$discussionid','$userId','$post',NOW())";
+	$query = "INSERT INTO discussion VALUES('$discussionid','$userId','$post',NOW())";
 	$insert = mysql_query($query);
 	if($insert == 1){
 		return 1;
