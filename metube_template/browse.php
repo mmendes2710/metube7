@@ -1,7 +1,5 @@
 <?php
 	session_start();
-	echo "Session ID: ", session_id(), "<br>";
-	echo session_save_path(), "<br>";
 	include_once "function.php";
 ?>
 <!--
@@ -64,6 +62,10 @@ function saveDownload(id)
 
 		<form action="playlist.php" method="post">
 			<input type="submit" class="btn" value="My Playlist">
+		</form>
+
+		<form action="discussion.php" method="post">
+			<input type="submit" class="btn" value="Discussion">
 		</form>
 
 		</div>

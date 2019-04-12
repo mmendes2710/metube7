@@ -53,12 +53,12 @@ function saveDownload(id)
 
 
 <?php
-    $query = mysql_query("SELECT * FROM account");
+    $query = @mysql_query("SELECT * FROM account");
 ?>
 
 <form action="" method="post">
     <?php 
-        echo "<b> Channel Listings: </b>".'<select class="form-select" name="listingdropdown">';
+        echo "<b> Channel Listings: </b>".'<select class="form-select" style="width: 300px" name="listingdropdown">';
         echo "<option value='None'>".None."</option>";
         while($row = mysql_fetch_array($query)){
             echo "<option value='".$row[0]."'>".$row[0]."</option>";
