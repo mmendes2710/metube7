@@ -140,6 +140,18 @@ function remove_contact($username,$contactName){
 		}		
 }
 
+function edit_contact($username,$contactName,$contactType){
+		$query = "UPDATE `contacts` SET `contactType` = '$contactType' WHERE `username` = '$username' AND `contactName` = '$contactName'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("register_ID() failed Could not query the database: <br />". mysql_error());
+			return 1;	//Contact not registered
+		}
+		else{
+		return 0; //Successful contact removal
+		}		
+}
+
 //Displays the result of an attempted contact addition	
 function editConMess($result)
 {
@@ -156,6 +168,8 @@ function editConMess($result)
 		return "This contact is not in your contact list.";
 	case 6:
 		return "This contact was successfully removed.";
+	case 7:
+		return "This contact was edited.";
 	}
 }
 function other()

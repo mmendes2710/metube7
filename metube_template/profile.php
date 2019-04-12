@@ -63,7 +63,9 @@ session_start();
 	<form action="delContact.php" method="post">
 			<input type="submit" class="btn" value="Remove Contact">
 	</form>
-	
+	<form action="editContact.php" method="post">
+			<input type="submit" class="btn" value="Edit Contact">
+	</form>
 	
 </body>
 </html>
