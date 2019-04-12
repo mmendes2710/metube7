@@ -2,6 +2,7 @@
 <?php
 	session_start();
 	include_once "function.php";
+
 ?>	
 <html xmlns="http://www.w3.org/1999/xhtml">
 <link rel="stylesheet" href="docs/dist/spectre.css">
@@ -26,6 +27,20 @@ if(isset($_GET['submit'])){
 }
 if(isset($_GET['id'])) {
 	$id = $_GET['id'];
+	$hidden = true;
+
+	if(isset($_SESSION['username'])){
+		$username=$_SESSION['username'];
+		$query3 = "SELECT COUNT(*) FROM `playlist` WHERE mediaid=$id and username='$username'";
+		$result3 = mysql_query($query3);
+		$result_row = mysql_fetch_row($result3);
+		if($result_row[0] == 0){
+			$hidden = false;
+		}
+	}
+
+
+
 	$query = "SELECT * FROM media WHERE mediaid='".$_GET['id']."'";
 	$result = mysql_query( $query );
 	$result_row = mysql_fetch_row($result);
@@ -70,12 +85,18 @@ else
 <?php
 }
 ?>
+<form action="addtoplaylist.php" method="get"> 
+	<input hidden name='id' value=<?php echo $id;?>>
+	<input type=<?php if($hidden) echo "hidden"; else echo "submit"; ?> class="btn" value="Add to Playlist">
+</form>
+
 <form action="media.php" method="get">
 	<label class="form-label" for="input-example-1">Comment on video</label>
 	<input hidden name ="id" value=<?php echo $id;?>>
 	<input class="form-input" style="width: 300px" type="text" name="comment" placeholder="Write comment here...">
 	<input name="submit" type="submit"class="btn" value="Submit Comment">
 </form>
+
 <?php 
 	$query2 = "SELECT * FROM comments WHERE mediaid ='".$_GET['id']."' ORDER BY time DESC";
 	$result2 = mysql_query($query2);
