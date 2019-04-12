@@ -15,7 +15,7 @@ session_start();
     <title></title>
 </head>
 <body>
-	<h3>Add a new contact</h3>
+	<h3>Remove a Contact</h3>
 
 	<?php
 		$thisUser=$_SESSION['username'];
@@ -49,26 +49,12 @@ session_start();
 	</table>
 	</br>
 
-	<!-- Add a new contact to the user's contact list' -->
-	<form method="post" action="new_contact_process.php">
+	<!-- Remove a contact from the user's list' -->
+	<form method="post" action="rem_contact_process.php">
 		<table width="100%">
 			<tr>
-				<td  width="20%">New Contact Username:</td>
+				<td  width="20%">Contact Username to remove:</td>
 				<td width="80%"><input class="text"  type="text" name="contactName"><br/></td>
-			</tr>
-			<tr>
-				<td  width="20%">Select new contact type:</td>
-				<td>
-					<select name="contactType">
-						<option value="Contact" selected hidden="hidden">Choose here</option>
-						<option value="Contact">Contact</option>
-						<option value="Friend">Friend</option>
-						<option value="Foe">Foe</option>
-						<option value="Family">Family</option>
-						<option value="Favorite">Favorite</option>
-						<option value="Blocked">Blocked</option>
-					</select>
-				</td>
 			</tr>
 			<tr>
 				<td>

@@ -44,7 +44,7 @@ function saveDownload(id)
 	<div class="columns">
 		<div class="column col-auto">
 
-		<form action="logout.php" mehod = "post">
+		<form action="logout.php" method = "post">
 			<input type="submit" class="btn" value="Logout">
 		</form>
 
@@ -60,6 +60,10 @@ function saveDownload(id)
 			<input type="submit" class="btn" value="Message Inbox">
 		</form>
 
+		<form action="profile.php" method="post">
+			<input type="submit" class="btn" value="My Profile">
+		</form>
+
 		<form action="playlist.php" method="post">
 			<input type="submit" class="btn" value="My Playlist">
 		</form>
@@ -71,7 +75,6 @@ function saveDownload(id)
 		</div>
 		<div class="column">
 			<a href='media_upload.php'  style="color:#FF9900;">Upload File</a>
-			<a href='profile.php' style="color:#FF9900;">Your Profile</a>
 			<div id='upload_result'>
 			<?php 
 				if(isset($_REQUEST['result']) && $_REQUEST['result']!=0)

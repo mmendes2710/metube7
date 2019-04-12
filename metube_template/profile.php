@@ -1,12 +1,13 @@
 ﻿<?php
 session_start();
-	echo "Session ID: ", session_id(), "<br>";
-	echo session_save_path(), "<br>";
+	//echo "Session ID: ", session_id(), "<br>";
+	//echo session_save_path(), "<br>";
 	include_once "function.php";
 	if(!isset($_SESSION['username']) || $_SESSION['username'] == ""){
 		echo "Error: username variable not loaded";
 	}
 ?>
+<link rel="stylesheet" href="docs/dist/spectre.css">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -14,9 +15,6 @@ session_start();
     <title>Your Profile</title>
 </head>
 <body>
-	<?php
-		print_r($_SESSION);
-	?>
 	<h3>Welcome to your profile page <?php echo $_SESSION['username'];?></h3>
 	<a href='browse.php' style="color:#FF9900;">Browse Media</a>
 
@@ -57,10 +55,13 @@ session_start();
         <?php
 			}
 		?>
-	</table>
+	</table></br>
 
-	<form method="post" action="<?php echo "profile.php"; ?>">
-		<br><input name="addContact" type="submit" value="Add Contact"><br />
+	<form action="addContact.php" method="post">
+			<input type="submit" class="btn" value="Add Contact">
+	</form>
+	<form action="delContact.php" method="post">
+			<input type="submit" class="btn" value="Remove Contact">
 	</form>
 	
 	

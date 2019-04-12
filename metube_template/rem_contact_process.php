@@ -7,7 +7,7 @@ $username=$_SESSION['username'];
 if(isset($_POST['submit'])) {
 
 	//Check for missing input from the new contact form
-  if($_POST['contactName'] == "" || $_POST['contactType'] == "") {
+  if($_POST['contactName'] == "") {
     $result = "3";	//Error code that some field was missing
   }
   else {
@@ -19,12 +19,12 @@ if(isset($_POST['submit'])) {
     }
     else{
 		$checkCon = contact_exists($username, $_POST['contactName']);
-	  if($checkCon == 0){
-			$insertCon = register_contact($username, $_POST['contactName'], $_POST['contactType']);
-			$result = "0"; //Successful contact registry
+	  if($checkCon == 1){
+			$removeCon = remove_contact($username, $_POST['contactName']);
+			$result = "6"; //Successful contact removal
 	  }
 	  else{
-	  	  $result = "4"; //The contact is already in the contact list.
+	  	  $result = "5"; //The contact is not in the contact list
 	  }
     }
   }
@@ -53,6 +53,3 @@ if(isset($_POST['submit'])) {
 	</form>
 </body>
 </html>
-
-
-

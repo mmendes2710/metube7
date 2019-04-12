@@ -112,7 +112,7 @@ function contact_exists($username, $contactName)
 		return 0; //The contact is not in the contacts list
 	}
 	else{
-		return 1; //The contact is already in the contacts list
+		return 1; //The contact is in the contacts list
 	}
 }
 
@@ -128,8 +128,20 @@ function register_contact($username,$contactName,$contactType){
 		}		
 }
 
+function remove_contact($username,$contactName){
+		$query = "DELETE FROM `contacts` WHERE `username` = '$username' AND `contactName` = '$contactName'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("register_ID() failed Could not query the database: <br />". mysql_error());
+			return 1;	//Contact not registered
+		}
+		else{
+		return 0; //Successful contact removal
+		}		
+}
+
 //Displays the result of an attempted contact addition	
-function addConMess($result)
+function editConMess($result)
 {
 	switch ($result){
 	case 0:
@@ -140,6 +152,10 @@ function addConMess($result)
 		return "Missing input for the desired contact";
 	case 4:
 		return "This contact is already in your list!";
+	case 5:
+		return "This contact is not in your contact list.";
+	case 6:
+		return "This contact was successfully removed.";
 	}
 }
 function other()
@@ -168,7 +184,7 @@ function send_comment($mediaId, $userId, $comment){
 	}
 }
 function send_discussion($discussionid, $userId, $post){
-	$query = "INSERT INTO discussion VALUES('$discussionid','$userId','$post',NOW())";
+	$query = "INSERT INTO dicussion VALUES('$discussionid','$userId','$post',NOW())";
 	$insert = mysql_query($query);
 	if($insert == 1){
 		return 1;
