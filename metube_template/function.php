@@ -161,7 +161,7 @@ function editConMess($result)
 	case 2:
 		return "There is no account for that username";
 	case 3:
-		return "Missing input for the desired contact";
+		return "Missing some input";
 	case 4:
 		return "This contact is already in your list!";
 	case 5:

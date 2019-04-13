@@ -15,7 +15,7 @@ session_start();
     <title></title>
 </head>
 <body>
-	<h3>Edit a Contact</h3>
+	<h3>Edit your Bio</h3>
 
 	<?php
 		$thisUser=$_SESSION['username'];
@@ -49,7 +49,7 @@ session_start();
 	</table>
 	</br>
 
-	<!-- Edit a contact's  type -->
+	<!-- Edit a profile bio -->
 	<form method="post" action="edit_contact_process.php">
 		<table width="100%">
 			<tr>

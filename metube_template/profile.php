@@ -66,6 +66,10 @@ session_start();
 	<form action="editContact.php" method="post">
 			<input type="submit" class="btn" value="Edit Contact">
 	</form>
+	<form action="editBio.php" method="post">
+			<input type="submit" class="btn" value="Edit Bio">
+	</form>
+
 	
 </body>
 </html>
