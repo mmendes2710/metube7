@@ -61,7 +61,7 @@ function updateMediaTime($mediaid)
 
 function upload_error($result)
 {
-	//view erorr description in http://us2.php.net/manual/en/features.file-upload.errors.php
+	//view error description in http://us2.php.net/manual/en/features.file-upload.errors.php
 	switch ($result){
 	case 1:
 		return "UPLOAD_ERR_INI_SIZE";
