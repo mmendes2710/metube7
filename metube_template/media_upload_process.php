@@ -43,6 +43,9 @@ umask($old);
 				}
 				else /*Successfully upload file*/
 				{
+					$old = umask(0);
+					chmod($upfile, 0755);
+					umask($old);
 					//insert into media table
 					$insert = "insert into media(
 							  mediaid, filename,filepath,type,title,description,allowRate,allowDisc,size,category)".
