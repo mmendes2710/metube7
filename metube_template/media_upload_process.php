@@ -16,12 +16,13 @@ $allowDisc=$_POST['allowDisc'];
 $allowRating=$_POST['allowRating'];
 
 //Create Directory if doesn't exist
+$old = umask(0);
 if(!file_exists('uploads/'))
-	mkdir('uploads/', 0744);
+	mkdir('uploads/', 0755);
 $dirfile = 'uploads/'.$username.'/';
 if(!file_exists($dirfile))
-	mkdir($dirfile, 0744);
-
+	mkdir($dirfile, 0755);
+umask($old);
 
 	if($_FILES["file"]["error"] > 0 )
 	{ $result=$_FILES["file"]["error"];} //error from 1-4
