@@ -5,7 +5,8 @@ include_once "function.php";
 $username=$_SESSION['username'];
 
 if(isset($_POST['submit'])) {
-
+	$editBio = edit_bio($username, $_POST['biotext']);
+/*
 	//Check for missing input from the contact form
   if($_POST['contactName'] == "" || $_POST['contactType'] == "") {
     $result = "3";	//Error code that some field was missing
@@ -28,6 +29,7 @@ if(isset($_POST['submit'])) {
 	  }
     }
   }
+  */
 }
 ?>
 
@@ -43,7 +45,7 @@ if(isset($_POST['submit'])) {
 <body>
 	<p>
 	<?php
-		$editResult = editConMess($result);
+		$editResult = editBioMess($editBio);
 		echo "$editResult";
 	?>
 	</p>

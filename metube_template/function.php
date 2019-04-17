@@ -38,6 +38,12 @@ function register_ID($username,$password,$email,$type){
 		if(!$result){
 			die ("register_ID() failed Could not query the database: <br />". mysql_error());
 		}
+		$bioDefault="Your Bio Here";
+		$query = "INSERT INTO `biographies`(`username`,`biographyText`) VALUES ('$username', '$bioDefault')";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("register_ID() failed Could not query the database: <br />". mysql_error());
+		}
 		return 1;
 	}
 	else{
@@ -144,11 +150,23 @@ function edit_contact($username,$contactName,$contactType){
 		$query = "UPDATE `contacts` SET `contactType` = '$contactType' WHERE `username` = '$username' AND `contactName` = '$contactName'";
 		$result = mysql_query( $query );
 		if(!$result){
-			die ("register_ID() failed Could not query the database: <br />". mysql_error());
+			die ("edit_contact() failed Could not query the database: <br />". mysql_error());
 			return 1;	//Contact not registered
 		}
 		else{
 		return 0; //Successful contact removal
+		}		
+}
+
+function edit_bio($username,$biotext){
+		$query = "UPDATE `biographies` SET `biographyText` = '$biotext' WHERE `username` = '$username'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("edit_bio() failed Could not query the database: <br />". mysql_error());
+			return 1;	//Biography not updated
+		}
+		else{
+		return 0; //Successful bio update
 		}		
 }
 
@@ -172,6 +190,17 @@ function editConMess($result)
 		return "This contact was edited.";
 	}
 }
+
+function editBioMess($result)
+{
+	switch ($result){
+	case 0:
+		return "Your bio was updated.";
+	case 1:
+		return "Error, your update was unsuccessful.";
+	}
+}
+
 function other()
 {
 	//You can write your own functions here.

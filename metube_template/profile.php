@@ -35,6 +35,7 @@ session_start();
 		}
 	?>
 
+	</br>
 	<!-- Show the contact list -->
 	<div style="background:#339900;color:#FFFFFF; width:150px;">Contact List</div>
 	<table width="50%" cellpadding="0" cellspacing="0">
@@ -56,6 +57,28 @@ session_start();
 			}
 		?>
 	</table></br>
+	
+	<!--Show the biography-->
+	<?php
+		$thisUser=$_SESSION['username'];
+		$query = "SELECT * FROM `biographies` WHERE username = '$thisUser'"; 
+		$result = mysql_query( $query );
+		if (!$result)
+		{
+			die ("Could not query the biographies table in the database: <br />". mysql_error());
+		}
+	?>
+
+	<!-- Show the current bio -->
+	<div style="background:#339900;color:#FFFFFF; width:150px;">Your Bio</div>
+	<table>
+			<?php $result_row = mysql_fetch_row($result);?>
+			<tr>
+				<td>
+            		<?php echo $result_row[1];?> 
+				</td>
+			</tr>
+	</table>
 
 	<form action="addContact.php" method="post">
 			<input type="submit" class="btn" value="Add Contact">
