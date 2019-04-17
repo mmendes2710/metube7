@@ -45,11 +45,6 @@ session_start();
             <td>
             	<?php echo $result_row[2];?>
             </td>
-			<td>
-				<form action="channels\<?php echo $result_row[1];?>.php" method="post">
-					<input type="submit" class="btn" value="<?php echo $result_row[1];?>'s Channel">
-				</form>
-			</td>
 		</tr>
         <?php
 			}

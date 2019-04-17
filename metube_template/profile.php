@@ -84,6 +84,42 @@ session_start();
 				</td>
 			</tr>
 	</table>
+	
+	<!--Show the uploaded media -->
+	<?php
+		$query = "SELECT * FROM `media` RIGHT JOIN `upload` ON `media.mediaid` = `upload.mediaid` WHERE `username` = '$thisUser'"; 
+		$result = mysql_query( $query );
+		if (!$result)
+		{
+			die ("Could not query the contacts table in the database: <br />". mysql_error());
+		}
+	?>
+
+	</br>
+	<div style="background:#339900;color:#FFFFFF; width:150px;">Uploaded Media</div>
+				<table width="50%" cellpadding="0" cellspacing="0">
+					<?php
+						while ($result_row = mysql_fetch_row($result))
+						{ 
+					?>
+					<tr valign="top">			
+						<td>
+								<?php 
+									echo $result_row[0];
+								?>
+						</td>
+						<td>
+							<a href="media.php?id=<?php echo $result_row[0];?>" target="_blank"><?php echo $result_row[1];?></a> 
+						</td>
+						<td>
+							<a href="<?php echo $result_row[2].$result_row[1];?>" download="<?php echo $result_row[2].$result_row[1];?>" target="_blank" onclick="javascript:saveDownload(<?php echo $result_row[0];?>);">Download</a>
+						</td>
+					</tr>
+				</table>
+        <?php
+			}
+		?>
+	</table></br>
 
 	<form action="addContact.php" method="post">
 			<input type="submit" class="btn" value="Add Contact">
