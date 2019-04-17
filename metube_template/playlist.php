@@ -5,8 +5,10 @@
 ?>
 <head>
     <link rel="stylesheet" href="docs/dist/spectre.css">
+    <form action="browse.php" method="post">
+	    <input type='submit' class='btn btn-primary' value="HOME">
+    </form>
 </head>
-
 <?php
 
     if(isset($_POST['id'])){
@@ -17,13 +19,9 @@
         $_POST['id'] = "";
     }
 
-
     $username = $_SESSION['username'];
-    $query1 = "SELECT * FROM `media` WHERE mediaid IN (SELECT mediaid FROM `playlist` WHERE username='$username')";
+    $query1 = "SELECT media.mediaid, media.filename, upload.uploadtime, upload.username FROM `media` INNER JOIN upload ON media.mediaid=upload.mediaid WHERE media.mediaid IN (SELECT mediaid FROM `playlist` WHERE username='$username')";
     $result1 = mysql_query($query1);
-
-    $query2 = "SELECT * FROM `upload` WHERE uploadid IN (SELECT mediaid FROM `playlist` WHERE username='$username')";
-    $result2 = mysql_query($query2);
 
 ?>
 <body>
@@ -41,11 +39,11 @@
             <tbody>
                 <?php
                     while($result_row1 = mysql_fetch_row($result1)){
-                        $result_row2 = mysql_fetch_row($result2);
+                        //$result_row2 = mysql_fetch_row($result2);
                         echo "<tr>";
-                        echo "<td>".$result_row2[1]."</td>";
+                        echo "<td>".$result_row1[3]."</td>";
                         echo "<td><a href='media.php?id=".$result_row1[0]."' target='_blank'>".$result_row1[1]."</a></td>";
-                        echo "<td>".$result_row2[3]."</td>";
+                        echo "<td>".$result_row1[2]."</td>";
                         echo "<td>";
                         echo "<form action='playlist.php' method='post'><input hidden name ='id' value=".$result_row1[0]."><input type='submit' class='btn' value='X'></form>";
                         echo "</td>";
