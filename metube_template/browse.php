@@ -30,6 +30,7 @@ function saveDownload(id)
 </head>
 
 <?php
+	$username = $_SESSION['username'];
 	$query1 = "SELECT media.mediaid, media.filename, media.filepath, media.title, media.description FROM media ORDER BY mediaid DESC";
     $bquery = $query1;
     $title = "Browse";
@@ -184,11 +185,22 @@ function saveDownload(id)
 						</div>
 					</div>
 				</div>
-
 			</form>
-			<form action="browse.php" method="post">
-				<input type="submit" class="btn" name="mostRecent" VALUE="Most Recent Uploads" style="width: 200px">
-			</form>
+			<div class="container">
+			<div class="columns">
+				<div class="column col-auto">
+					<form action="browse.php" method="post">
+						<input type="submit" class="btn" name="mostRecent" VALUE="Most Recent Uploads" style="width: 200px">
+					</form>
+				</div>
+				<div class="column col-auto">
+				<form action="cloudresults.php" method="post">
+						<input type="submit" class="btn" name="mostRecent" VALUE="Word Cloud" style="width: 200px">
+					</form>
+				</div>
+			</div>
+			</div>
+			
 			<div class='container'>
 				<h3><?php echo $title; ?></h3>
 				<table class="table table-striped" width="100%">
