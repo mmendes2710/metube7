@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <?php
 	session_start();
 	include_once "function.php";
 
 ?>	
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <link rel="stylesheet" href="docs/dist/spectre.css">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -30,6 +30,14 @@ if(isset($_GET['id'])) {
 	$hidden1 = true;
 	$hidden2 = true;
 	$hidden3 = true;
+	$hidden4 = true;
+
+	$query8 = "SELECT allowDisc, allowRate FROM media WHERE mediaid=$id";
+	$result8 = mysql_query($query8);
+	$result_row8 = mysql_fetch_row($result8);
+	if($result_row8[0] == 1){
+		$hidden4 = false;
+	}
 
 	if(isset($_SESSION['username'])){
 		$username=$_SESSION['username'];
@@ -45,12 +53,16 @@ if(isset($_GET['id'])) {
 		if($result_row[0] == 0){
 			$hidden2 = false;
 		}
-		$query5 = "SELECT COUNT(*) FROM `ratings` WHERE mediaid=$id and username='$username'";
-		$result5 = mysql_query($query5);
-		$result_row = mysql_fetch_row($result5);
-		if($result_row[0] == 0){
-			$hidden3 = false;
+
+		if($result_row8[1] == 1){
+			$query5 = "SELECT COUNT(*) FROM `ratings` WHERE mediaid=$id and username='$username'";
+			$result5 = mysql_query($query5);
+			$result_row = mysql_fetch_row($result5);
+			if($result_row[0] == 0){
+				$hidden3 = false;
+			}
 		}
+
 	}
 	$query6 = "SELECT COUNT(*) FROM ratings WHERE mediaid=$id";
 	$result6 = mysql_query($query6);
@@ -74,30 +86,36 @@ if(isset($_GET['id'])) {
 	$type=$result_row[3];
 	if(substr($type,0,5)=="image") //view image
 	{
+		echo "<img src='".$filepath.$filename."'/>";
+		echo "<br></br>";
 		echo "Viewing Picture:";
 		echo $result_row[2].$result_row[1];
-		echo "<img src='".$filepath.$filename."'/>";
-	}
-	else //view movie
-	{	
-?>
-	<p>Viewing Video:<?php echo $result_row[2].$result_row[1];?></p>
-	<video width="320" height="240" autoplay>
-		<source src=<?php echo $result_row[2].$result_row[1];?>>	
-	</video>
+	}//audio next
+	else if($result_row[3] == "audio/mpeg"){
+		echo "<br></br><br></br>";
+		echo "<audio controls>";
+		echo "<source src=".$result_row[2].$result_row[1]." type='audio/mpeg'>";
+		echo "Your Browser does not support this audio element";
+		echo "</audio>";
+		echo "<br></br>";
+		echo "Listening to Audio: ".$result_row[2].$result_row[1];
+		echo "<br></br>";
+	} else //view movie
+	{
+		if($result_row[3] != "video/mp4" && $result_row[3] != "video/ogg"){
+			echo "Invalid file format for ".$result_row[2].$result_row[1];
+		}
+		else{	
+?>	
+			<p>Viewing Video:<?php echo $result_row[2].$result_row[1];?></p>
+			
+			<video width="400" controls>
+				<source src= <?php echo $result_row[2].$result_row[1];?> type=<?php echo $result_row[3];?>>
+				Your browser does not support HTML5 video.
+			</video>
 
-
-    <!-- <object id="MediaPlayer" width=320 height=286 classid="CLSID:22D6f312-B0F6-11D0-94AB-0080C74C7E95" standby="Loading Windows Media Player components…" type="application/x-oleobject" codebase="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,7,1112">
-	
-
-<param name="filename" value="<?php echo $result_row[2].$result_row[1];  ?>">
-<param name="Showcontrols" value="True">
-<param name="autoStart" value="True">
-
-<embed type="application/x-mplayer2" src="<?php echo $result_row[2].$result_row[1];  ?>" name="MediaPlayer" width=320 height=240></embed>
-
-</object> -->         
 <?php
+		}
 	}
 }
 else
@@ -154,7 +172,7 @@ else
 	$query2 = "SELECT * FROM comments WHERE mediaid ='".$_GET['id']."' ORDER BY time DESC";
 	$result2 = mysql_query($query2);
 ?>
-<div class="container">
+<div <?php if($hidden4) echo " hidden ";?>class="container">
 	<form action="media.php" method="get">
 		<input hidden name ="id" value=<?php echo $id;?>>
 		<input class="form-input" style="width: 300px" type="text" name="comment" placeholder="Write comment here...">
