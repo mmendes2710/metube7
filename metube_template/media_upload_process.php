@@ -54,6 +54,12 @@ umask($old);
 						  or die("Insert into Media error in media_upload_process.php " .mysql_error());
 					$result="0";
 					
+					$mediaid = mysql_insert_id();
+					//insert into upload table
+					$insertUpload="insert into upload(uploadid,username,mediaid) values(NULL,'$username','$mediaid')";
+					$queryresult = mysql_query($insertUpload)
+						  or die("Insert into view error in media_upload_process.php " .mysql_error());
+					
 					//insert keywords to the keyword table
 					$fileName=$_FILES["file"]["name"];
 					foreach($_POST['keyword'] as $word){

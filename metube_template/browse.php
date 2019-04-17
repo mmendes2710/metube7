@@ -38,7 +38,9 @@ function saveDownload(id)
 <body>
 <p>Welcome <?php if(!isset($_SESSION["username"]) || $_SESSION["username"] == "") echo "Guest"; else echo $_SESSION['username'];?>
 </p>
-
+<?php
+$username=$_SESSION["username"];
+?>
 
 <div class="container">
 	<div class="columns">
@@ -62,6 +64,10 @@ function saveDownload(id)
 
 		<form action="profile.php" method="post">
 			<input type="submit" class="btn" value="My Profile">
+		</form>
+		
+		<form action="channels\<?php echo $username?>.php" method="post">
+			<input type="submit" class="btn" value="My Channel">
 		</form>
 
 		<form action="playlist.php" method="post">

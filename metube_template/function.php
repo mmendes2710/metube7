@@ -38,12 +38,34 @@ function register_ID($username,$password,$email,$type){
 		if(!$result){
 			die ("register_ID() failed Could not query the database: <br />". mysql_error());
 		}
+		
+		//create the default bio
 		$bioDefault="Your Bio Here";
 		$query = "INSERT INTO `biographies`(`username`,`biographyText`) VALUES ('$username', '$bioDefault')";
 		$result = mysql_query( $query );
 		if(!$result){
 			die ("register_ID() failed Could not query the database: <br />". mysql_error());
 		}
+		
+		//create the channel
+		$old = umask(0);
+		if(!file_exists('channels/'))
+			mkdir('channels/', 0755);
+		$dirfile = 'channels/';
+		if(!file_exists($dirfile))
+			mkdir($dirfile, 0755);
+		umask($old);
+		
+		//copy the contents of channel.php to create the personal channel
+		$channfile=$dirfile.urlencode("$username.php");
+		$newChannel = fopen($channfile, "w");
+		$getChannel = file_get_contents("channel.php");
+		if(!getchannel){
+			die ("register_ID() failed to copy channel.php contents: <br />". mysql_error());
+		}
+		fwrite($newChannel, $getChannel);
+		fclose($newChannel);
+		
 		return 1;
 	}
 	else{
