@@ -3,9 +3,12 @@ session_start();
 	//echo "Session ID: ", session_id(), "<br>";
 	//echo session_save_path(), "<br>";
 	include_once "../function.php";
-	if(!isset($_SESSION['username']) || $_SESSION['username'] == ""){
+	/*
+	if(!isset($_POST['submit'])){
 		echo "Error: username variable not loaded";
 	}
+	*/
+$chaName=$_POST['chaName'];
 ?>
 <link rel="stylesheet" href="docs/dist/spectre.css">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -15,12 +18,12 @@ session_start();
     <title>Your Profile</title>
 </head>
 <body>
-	<h3>Welcome to <?php echo $_SESSION['username'];?>'s channel</h3>
+	<h3>Welcome to <?php echo $chaName;?>'s channel</h3>
 	<a href='../browse.php' style="color:#FF9900;">Browse Media</a>
 	<br/><br/>
 	
 	<?php
-		$thisUser=$_SESSION['username'];
+		$thisUser=$_POST['chaName'];
 		$query = "SELECT * FROM `contacts` WHERE username = '$thisUser'"; 
 		$result = mysql_query( $query );
 		if (!$result)
@@ -53,7 +56,7 @@ session_start();
 	
 	<!--Show the biography-->
 	<?php
-		$thisUser=$_SESSION['username'];
+		$thisUser=$chaName;
 		$query = "SELECT * FROM `biographies` WHERE username = '$thisUser'"; 
 		$result = mysql_query( $query );
 		if (!$result)

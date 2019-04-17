@@ -43,6 +43,7 @@ function saveDownload(id)
 $username=$_SESSION["username"];
 ?>
 
+
 <div class="container">
 	<div class="columns">
 		<div class="column col-auto">
@@ -67,8 +68,10 @@ $username=$_SESSION["username"];
 			<input type="submit" class="btn" value="My Profile">
 		</form>
 		
-		<form action="channels\<?php echo $username?>.php" method="post">
-			<input type="submit" class="btn" value="My Channel">
+		<form action="channels\<?php echo $username;?>.php" method="post">
+			<?php $chaName = $username;?>
+			<input type="radio" name="chaName" checked hidden="hidden" value="<?php echo $chaName?>">
+			<input type="submit" class="btn" value="<?php echo $username;?>'s Channel">
 		</form>
 
 		<form action="playlist.php" method="post">
