@@ -239,6 +239,7 @@ function send_message($to,$from,$message){
 	}
 }
 function send_comment($mediaId, $userId, $comment){
+	$comment = mysql_real_escape_string($comment);
 	$query = "INSERT INTO comments VALUES('$mediaId','$userId','$comment',NOW())";
 	$insert = mysql_query($query);
 	if($insert == 1){
@@ -249,7 +250,8 @@ function send_comment($mediaId, $userId, $comment){
 	}
 }
 function send_discussion($discussionid, $userId, $post){
-	$query = "INSERT INTO dicussion VALUES('$discussionid','$userId','$post',NOW())";
+	$post = mysql_real_escape_string($post);
+	$query = "INSERT INTO discussion VALUES('$discussionid','$userId','$post',NOW())";
 	$insert = mysql_query($query);
 	if($insert == 1){
 		return 1;

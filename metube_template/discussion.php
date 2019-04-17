@@ -27,9 +27,10 @@
             else{
                 echo "<script>alert('Unable to send discussion')</script>";  
             }
+            $_POST['discussiontext'] ="";
         }
 
-        $query4 = "SELECT * FROM dicussion WHERE discussionid=$id ORDER BY time desc";
+        $query4 = "SELECT * FROM discussion WHERE discussionid=$id ORDER BY time desc";
         $result4 = mysql_query($query4);
         if(!$result4){ 
             die("Could not query4 DB: ".mysql_error());
@@ -59,7 +60,7 @@
                     <select class="form-select" name="category" style="width: 300px">
                     <?php 
                         if(isset($_POST['category'])){
-                            echo "<option>.".$_POST['category']."</option>";
+                            echo "<option>".$_POST['category']."</option>";
                         }
                         else{
                             echo "<option></option>";
@@ -77,7 +78,7 @@
             <h2><?php if(!isset($_POST['category'])) echo ""; else echo $_POST['category'];?></h2>
                 <form action="discussion.php" method="post">
                     <div class="form-group">
-                        <label class="form-label" for="dicusssiontext">New Comment: </label>
+                        <label class="form-label" for="discusssiontext">New Comment: </label>
                         <input hidden name ="category" value=<?php if(!isset($_POST['category'])) echo ""; else echo $_POST['category'];?>>
                         <input hidden name ="comment" value=<?php if(!isset($_POST['category'])) echo ""; else echo $_POST['category'];?>>
                         <textarea class="form-input" type="text" name="discussiontext" style="width: 600px" placeholder="Type Comment Here..."></textarea>
