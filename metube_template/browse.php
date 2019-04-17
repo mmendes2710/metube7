@@ -46,8 +46,22 @@ function saveDownload(id)
         $query3 = "SELECT media.mediaid, media.filename, media.filepath, media.title, media.description FROM `keywords` INNER JOIN media on keywords.mediaid = media.mediaid WHERE keyword='$keyword'  ORDER BY mediaid DESC";
         $bquery = $query3;
         $title = "Keyword Search on '".$keyword."'";
-    }
-
+	}
+	else if(isset($_POST['recent']) && $_POST['recent'] != ""){
+        $query4 = "SELECT media.mediaid, media.filename, media.filepath, media.title, media.description FROM media INNER JOIN upload on media.mediaid = upload.mediaid ORDER BY  upload.uploadtime DESC ";
+        $bquery = $query4;
+        $title = "Most Recently Uploaded";
+        $_POST['recent'] = "";
+	}
+	else if(isset($_POST['mostviewed']) && $_POST['mostviewed'] != ""){
+		//FIXME
+		$query5 = "";
+		//FIXME
+        $bquery = $query5;
+        $title = "Most Viewed";
+        $_POST['mostviewed'] = "";
+	}
+	
     $bresult = mysql_query($bquery);
 	
 ?>
@@ -190,7 +204,14 @@ function saveDownload(id)
 			<div class="columns">
 				<div class="column col-auto">
 					<form action="browse.php" method="post">
+						<input hidden name="recent" value="recent">
 						<input type="submit" class="btn" name="mostRecent" VALUE="Most Recent Uploads" style="width: 200px">
+					</form>
+				</div>
+				<div class="column col-auto">
+					<form action="browse.php" method="post">
+						<input hidden name="mostviewed" value="mostviewed">
+						<input type="submit" class="btn" name="mostviewed" VALUE="Most Viewed" style="width: 200px">
 					</form>
 				</div>
 				<div class="column col-auto">
