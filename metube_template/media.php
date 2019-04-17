@@ -18,14 +18,17 @@
 
 <body>
 <?php
-if(isset($_GET['submit'])){
-	if($_GET['comment'] != ""){
-		$result = send_comment($_GET['id'],$_SESSION['username'],$_GET['comment']);
+if(isset($_POST['submit'])){
+	if($_POST['comment'] != ""){		
+		$result = send_comment($_GET['id'],$_SESSION['username'],$_POST['comment']);
+		$_POST['comment'] = "";
 		if($result == 1){
 		}
 		else{
 			echo "<script>alert('Unable to post comment')</script>";  
 		}
+		$id = $_GET['id'];
+		header("Location: media.php?id=$id");
 	}
 }
 if(isset($_GET['id'])) {
@@ -176,7 +179,7 @@ else
 	$result2 = mysql_query($query2);
 ?>
 <div <?php if($hidden4) echo " hidden ";?>class="container">
-	<form action="media.php" method="get">
+	<form action=<?php echo "'media.php?id=".$id."'";?> method="post">
 		<input hidden name ="id" value=<?php echo $id;?>>
 		<input class="form-input" style="width: 300px" type="text" name="comment" placeholder="Write comment here...">
 		<input name="submit" type="submit"class=<?php if(!isset($_SESSION['username'])) echo "'btn disabled'"; else echo "'btn'";?> value="Submit Comment">
