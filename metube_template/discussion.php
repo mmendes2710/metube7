@@ -11,7 +11,23 @@
     if(!$result1){ 
         die("Could not query1 DB: ".mysql_error());
     }
-    if(isset($_POST['category']) && $_POST['category'] != ""){
+    if(isset($_GET['category']) && $_GET['category'] != ""){
+        $category = $_GET['category'];
+        $query2 = "SELECT categoryid FROM discategory WHERE category='$category'";
+        $result2 = mysql_query($query2);
+        if(!$result2){ 
+            die("Could not query2 DB: ".mysql_error());
+        }
+        $row = mysql_fetch_row($result2);
+        $id = $row[0];
+
+        $query4 = "SELECT * FROM discussion WHERE discussionid=$id ORDER BY time desc";
+        $result4 = mysql_query($query4);
+        if(!$result4){ 
+            die("Could not query4 DB: ".mysql_error());
+        }
+    }
+    else if(isset($_POST['category'])){
         $category = $_POST['category'];
         $query2 = "SELECT categoryid FROM discategory WHERE category='$category'";
         $result2 = mysql_query($query2);
@@ -20,20 +36,15 @@
         }
         $row = mysql_fetch_row($result2);
         $id = $row[0];
-        
         if(isset($_POST['postdis']) && $_POST['discussiontext'] != ""){
             $postdiscussion = send_discussion($id,$_SESSION['username'],$_POST['discussiontext']);
             if($postdiscussion == 1){}
             else{
                 echo "<script>alert('Unable to send discussion')</script>";  
             }
-            $_POST['discussiontext'] ="";
-        }
-
-        $query4 = "SELECT * FROM discussion WHERE discussionid=$id ORDER BY time desc";
-        $result4 = mysql_query($query4);
-        if(!$result4){ 
-            die("Could not query4 DB: ".mysql_error());
+            $_POST['discussiontext'] = "";
+            $category= $_POST['category'];
+            header("Location: discussion.php?category=$category");
         }
     }
 
@@ -55,12 +66,12 @@
                 </form>
                 -->
                 
-                <form action="discussion.php" method="post">
+                <form action="discussion.php" method="get">
                     <label class="form-label" for="category">Choose Topic: </label>
                     <select class="form-select" name="category" style="width: 300px">
                     <?php 
-                        if(isset($_POST['category'])){
-                            echo "<option>".$_POST['category']."</option>";
+                        if(isset($_GET['category'])){
+                            echo "<option>".$_GET['category']."</option>";
                         }
                         else{
                             echo "<option></option>";
@@ -75,14 +86,14 @@
     
             </div><!-- COLUMN END-->
             <div class="column-auto">
-            <h2><?php if(!isset($_POST['category'])) echo ""; else echo $_POST['category'];?></h2>
+            <h2><?php if(!isset($_GET['category'])) echo ""; else echo $_GET['category'];?></h2>
                 <form action="discussion.php" method="post">
                     <div class="form-group">
                         <label class="form-label" for="discusssiontext">New Comment: </label>
-                        <input hidden name ="category" value=<?php if(!isset($_POST['category'])) echo ""; else echo $_POST['category'];?>>
-                        <input hidden name ="comment" value=<?php if(!isset($_POST['category'])) echo ""; else echo $_POST['category'];?>>
+                        <input hidden name ="category" value=<?php if(!isset($_GET['category'])) echo ""; else echo $_GET['category'];?>>
+                        <input hidden name ="comment" value=<?php if(!isset($_GET['category'])) echo ""; else echo $_GET['category'];?>>
                         <textarea class="form-input" type="text" name="discussiontext" style="width: 600px" placeholder="Type Comment Here..."></textarea>
-                        <input type="submit" name="postdis" class="btn" value="Post" <?php if(!isset($_POST['category'])) echo "disabled";?>>
+                        <input type="submit" name="postdis" class="btn" value="Post" <?php if(!isset($_GET['category'])) echo "disabled";?>>
                     </div>
                 </form>
                 <table class="table" width="100%">
@@ -95,7 +106,7 @@
                     </thead>
                     <tbody>
                         <?php
-                            if(isset($_POST['category'])){
+                            if(isset($_GET['category']) && $_GET['category'] != ""){
                                 while($result_row = mysql_fetch_row($result4)){
                                     echo "<tr>";
                                     echo "<td>".$result_row[1]."</td>";
