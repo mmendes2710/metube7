@@ -114,6 +114,9 @@ function saveDownload(id)
 		<form action="playlist.php" method="post">
 			<input type="submit" class="btn" value="My Playlist">
 		</form>
+		<form action="subscriptions.php" method="post">
+			<input type="submit" class="btn" value="My Subscriptions">
+		</form>
 		
 		<form action="favorites.php" method="post">
 			<input type="submit" class="btn" value="My Favorites">

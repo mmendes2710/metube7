@@ -9,9 +9,6 @@
 
 <head>
     <link rel="stylesheet" href="docs/dist/spectre.css">
-    <form action="browse.php" method="post">
-	    <input type='submit' class='btn btn-primary' value="HOME">
-    </form>
 </head>
 <form action="browse.php" method="post">
 	<input type='submit' class='btn btn-primary' value="HOME">

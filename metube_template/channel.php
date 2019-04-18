@@ -8,7 +8,22 @@ session_start();
 		echo "Error: username variable not loaded";
 	}
 	*/
-$chaName=$_POST['chaName'];
+	$chaName=$_POST['chaName'];
+
+	$hideSubscribe = true;
+	if(isset($_SESSION['username'])){
+		//see if they already subscribed
+		$username = $_SESSION['username'];
+		$query1 = "SELECT COUNT(*) FROM subscriptions WHERE username='$username' and subscribeto = '$chaName'";
+		$result1 = mysql_query($query1);
+		$result_row1 = mysql_fetch_row($result1);
+		if($result_row1[0] != 1){
+			$hideSubscribe = false;
+		}
+	
+	} 
+
+
 ?>
 <link rel="stylesheet" href="../docs/dist/spectre.css">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -33,6 +48,12 @@ $chaName=$_POST['chaName'];
 	?>
 	
 	</br>
+
+	<form <?php if($hideSubscribe) echo " hidden ";?> action="../addsubscription.php" method="post">
+		<input hidden name='chaName' value=<?php echo $chaName;?>>
+		<input type='submit' class='btn btn-primary' value="Subscribe">
+	</form>
+
 	<!-- Show the contact list -->
 	<div style="background:#339900;color:#FFFFFF; width:150px;">Contact List</div>
 	<table width="50%" cellpadding="0" cellspacing="0">
