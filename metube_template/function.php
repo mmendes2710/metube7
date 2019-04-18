@@ -318,6 +318,7 @@ function editUpload($mediaid, $title, $description, $category, $allowDisc, $allo
 		}
 		
 		foreach($keyword as $word){
+					$word = mysql_real_escape_string($word);
 					if($word == ""){
 						continue;
 					}
@@ -366,7 +367,6 @@ function deleteUpload($mediaid){
 		if(!$result){
 			break;	//No rows in comments
 		}
-		
 		
 		$query = "DELETE FROM `favorites` WHERE `mediaid` = '$mediaid'";
 		$result = mysql_query( $query );

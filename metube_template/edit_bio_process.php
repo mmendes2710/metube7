@@ -3,9 +3,11 @@ session_start();
 include_once "function.php";
 
 $username=$_SESSION['username'];
+$biotext = $_POST['biotext'];
+$biotext = mysql_real_escape_string($biotext);
 
 if(isset($_POST['submit'])) {
-	$editBio = edit_bio($username, $_POST['biotext']);
+	$editBio = edit_bio($username, $biotext);
 /*
 	//Check for missing input from the contact form
   if($_POST['contactName'] == "" || $_POST['contactType'] == "") {

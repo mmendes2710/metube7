@@ -1,6 +1,9 @@
 <?php
 session_start();
 include_once "function.php";
+if(!isset($_SESSION['username'])){
+    	header('Location: index.php');
+}
 
 /******************************************************
 *
@@ -10,7 +13,9 @@ include_once "function.php";
 
 $username=$_SESSION['username'];
 $title=$_POST['title'];
+$title = mysql_real_escape_string($title);
 $description=$_POST['description'];
+$description = mysql_real_escape_string($description);
 $category=$_POST['category'];
 $allowDisc=$_POST['allowDisc'];
 $allowRating=$_POST['allowRating'];
@@ -64,6 +69,7 @@ umask($old);
 					//insert keywords to the keyword table
 					$fileName=$_FILES["file"]["name"];
 					foreach($_POST['keyword'] as $word){
+					$word = mysql_real_escape_string($word);
 					if($word == ""){
 						continue;
 					}

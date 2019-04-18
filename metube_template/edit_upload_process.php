@@ -7,7 +7,9 @@
 	
 $username=$_SESSION['username'];
 $title=$_POST['title'];
+$title = mysql_real_escape_string($title);
 $description=$_POST['description'];
+$description = mysql_real_escape_string($description);
 $category=$_POST['category'];
 $allowDisc=$_POST['allowDisc'];
 $allowRating=$_POST['allowRating'];
