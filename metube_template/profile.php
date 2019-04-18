@@ -3,9 +3,9 @@ session_start();
 	//echo "Session ID: ", session_id(), "<br>";
 	//echo session_save_path(), "<br>";
 	include_once "function.php";
-	if(!isset($_SESSION['username']) || $_SESSION['username'] == ""){
-		echo "Error: username variable not loaded";
-	}
+	if(!isset($_SESSION['username'])){
+    	header('Location: index.php');
+    }
 ?>
 <link rel="stylesheet" href="docs/dist/spectre.css">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -110,6 +110,7 @@ session_start();
 							<th>Description</th>
 							<th>Download</th>
 							<th>Delete</th>
+							<th>Edit</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -124,6 +125,7 @@ session_start();
 										echo "<td>".$result_row[4]."</td>";
 										echo "<td><a href='".$result_row[2].$result_row[1]."' class='btn' download='".$result_row[2].$result_row[1]."' target='_blank' onclick='javascript:saveDownload(".$result_row[0].");'>Download</a></td>";
 										echo "<td><form action='delete_upload.php' method='post'><input hidden name ='id' value=".$mediaID."><input type='submit' class='btn' value='X'></form></td>";
+										echo "<td><form action='edit_upload.php' method='post'><input hidden name ='id' value=".$mediaID."><input type='submit' class='btn' value='Edit'></form></td>";
 										echo "</tr>";
 									}
 							?>

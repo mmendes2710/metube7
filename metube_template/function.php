@@ -279,18 +279,77 @@ function editConMess($result)
 	}
 }
 
+function editUpload($mediaid, $title, $description, $category, $allowDisc, $allowRating, $share, $keyword){
+		$query = "UPDATE media SET title = '$title' WHERE mediaid = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("update title failed, Could not query the media table: <br />". mysql_error());
+			return 1;	//metadata not updated
+		}
+	
+		$query = "UPDATE `media` SET `description` = '$description' WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("update title failed, Could not query the media table: <br />". mysql_error());
+			return 1;	//metadata not updated
+		}
+		
+		$query = "UPDATE `media` SET `category` = '$category' WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("update title failed, Could not query the media table: <br />". mysql_error());
+			return 1;	//metadata not updated
+		}
+		
+		$query = "UPDATE `media` SET `allowDisc` = '$allowDisc' WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("update title failed, Could not query the media table: <br />". mysql_error());
+			return 1;	//metadata not updated
+		}
+		
+		$query = "UPDATE `media` SET `allowRate` = '$allowRating' WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("update title failed, Could not query the media table: <br />". mysql_error());
+			return 1;	//metadata not updated
+		}
+		
+		$query = "UPDATE `sharing` SET `setting` = '$share' WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("update title failed, Could not query the media table: <br />". mysql_error());
+			return 1;	//metadata not updated
+		}
+		
+		$query = "DELETE FROM `keywords` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			break;	//No rows in comments
+		}
+		
+		foreach($keyword as $word){
+					if($word == ""){
+						continue;
+					}
+					$insertKey = "INSERT INTO `keywords`(`keyword`, `mediaid`, `keyMediaID`) VALUES ('$word','$mediaid', 'NULL')";
+					$queryresult = mysql_query($insertKey)
+						  or die("Insert into Keywords error in edit_upload_process.php " .mysql_error());
+					$result="0";
+		}
+		return 0;
+}
 
-
-//Message when deleting a file
-function deleteUploadMess($result)
+//Message when editing an upload's metadata
+function editUploadMess($result)
 {
 	switch ($result){
 	case 6:
-		return "This file was removed.";
+		return "This file's properties were edited";
 	case 3:
-		return "Error, the file was not removed.";
+		return "Error, the file was not edited";
 	case 5:
-		return "Error removing the file.";
+		return "Error, the file was not edited";
 	}
 }
 
@@ -354,6 +413,19 @@ function deleteUpload($mediaid){
 			return 1;	//File not deleted
 		}
 		return 0;
+}
+
+//Message when deleting a file
+function deleteUploadMess($result)
+{
+	switch ($result){
+	case 6:
+		return "This file was removed.";
+	case 3:
+		return "Error, the file was not removed.";
+	case 5:
+		return "Error removing the file.";
+	}
 }
 
 function other()

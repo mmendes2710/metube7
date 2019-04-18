@@ -1,6 +1,9 @@
 ﻿<?php
 session_start();
 include_once "function.php";
+if(!isset($_SESSION['username'])){
+    	header('Location: index.php');
+    }
 
 $username=$_SESSION['username'];
 
