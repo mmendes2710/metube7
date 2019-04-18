@@ -55,25 +55,6 @@ session_start();
 	</form>
 
 	<!-- Show the contact list -->
-	<div style="background:#339900;color:#FFFFFF; width:150px;">Contact List</div>
-	<table width="50%" cellpadding="0" cellspacing="0">
-		<?php
-			while ($result_row = mysql_fetch_row($result))
-			{ 
-		?>
-        <tr valign="top">
-			
-            <td>
-            	<?php echo $result_row[1];?> 
-            </td>
-            <td>
-            	<?php echo $result_row[2];?>
-            </td>
-		</tr>
-        <?php
-			}
-		?>
-	</table></br>
 	
 	<!--Show the biography-->
 	<?php
