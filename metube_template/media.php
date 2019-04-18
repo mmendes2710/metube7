@@ -17,6 +17,10 @@
 </form>
 
 <body>
+
+<div class="columns">
+<div class="column col-8">
+
 <?php
 if(isset($_GET['submit'])){
 	if($_GET['comment'] != ""){
@@ -84,6 +88,9 @@ if(isset($_GET['id'])) {
 	$result = mysql_query( $query );
 	$result_row = mysql_fetch_row($result);
 	
+	$query9 = "Select distinct keywords.mediaid, media.filename, media.description, media.title from keywords INNER JOIN media on keywords.mediaid = media.mediaid where keyword in (SELECT keyword from keywords where keywords.mediaid = $id) and keywords.mediaid != $id";
+	$recomendResult = mysql_query($query9);
+
 	updateMediaTime($_GET['id']);
 	
 	$filename=$result_row[1];
@@ -210,5 +217,30 @@ else
         </table>
     </div>
 
+</div>
+	<div class="column col-auto">
+	<h3>Recommendations: </h3>
+        <table class="table" width="100%">
+            <thead>
+                <tr>
+                <th>Title</th>
+                <th>Filename</th>
+                <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    while($result_row = mysql_fetch_row($recomendResult)){
+                        echo "<tr>";
+                        echo "<td>".$result_row[3]."</td>";
+                        echo "<td><a href='media.php?id=".$result_row[0]."' class='btn' target='_blank'>".$result_row[1]."</a></td>";
+                        echo "<td>".$result_row[2]."</td>";
+                        echo "</tr>";
+                    }
+                ?>
+         </tbody>
+        </table>
+	</div>
+</div>
 </body>
 </html>
