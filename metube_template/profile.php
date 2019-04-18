@@ -109,11 +109,13 @@ session_start();
 							<th>File Name</th>
 							<th>Description</th>
 							<th>Download</th>
+							<th>Delete</th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php
 									while($result_row = mysql_fetch_row($muresult)){
+										$mediaID = $result_row[0];
 										echo "<tr>";
 										echo "<td>".$result_row[0]."</td>";
 										echo "<td>".$result_row[3]."</td>";
@@ -121,6 +123,7 @@ session_start();
 										echo "<td><a href='media.php?id=".$result_row[0]."' class='btn' target='_blank'>".$result_row[1]."</a></td>";
 										echo "<td>".$result_row[4]."</td>";
 										echo "<td><a href='".$result_row[2].$result_row[1]."' class='btn' download='".$result_row[2].$result_row[1]."' target='_blank' onclick='javascript:saveDownload(".$result_row[0].");'>Download</a></td>";
+										echo "<td><form action='delete_upload.php' method='post'><input hidden name ='id' value=".$mediaID."><input type='submit' class='btn' value='X'></form></td>";
 										echo "</tr>";
 									}
 							?>
@@ -140,6 +143,9 @@ session_start();
 	</form>
 	<form action="editBio.php" method="post">
 			<input type="submit" class="btn" value="Edit Bio">
+	</form>
+	<form action="edit_upload.php" method="post">
+			<input type="submit" class="btn" value="Edit an Upload">
 	</form>
 
 	

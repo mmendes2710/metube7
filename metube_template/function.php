@@ -279,17 +279,82 @@ function editConMess($result)
 	}
 }
 
-function editBioMess($result)
+
+
+//Message when deleting a file
+function deleteUploadMess($result)
 {
 	switch ($result){
-	case 0:
-		return "Your bio was updated.";
-	case 1:
-		return "Error, your update was unsuccessful.";
+	case 6:
+		return "This file was removed.";
+	case 3:
+		return "Error, the file was not removed.";
+	case 5:
+		return "Error removing the file.";
 	}
 }
 
-
+function deleteUpload($mediaid){
+		$query = "DELETE FROM `media` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("deleteUpload failed, Could not query the media table: <br />". mysql_error());
+			return 1;	//File not deleted
+		}
+	
+		$query = "DELETE FROM `download` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("deleteUpload failed, Could not query the download table: <br />". mysql_error());
+			return 1;	//File not deleted
+		}
+		
+		$query = "DELETE FROM `comments` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			break;	//No rows in comments
+		}
+		
+		$query = "DELETE FROM `keywords` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			break;	//No rows in comments
+		}
+		
+		
+		$query = "DELETE FROM `favorites` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			break; //No rows in favorites
+		}	
+		
+		$query = "DELETE FROM `playlist` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			break; //No rows in favorites
+		}
+		
+		$query = "DELETE FROM `ratings` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			break; //No rows ratings
+		}	
+		
+		$query = "DELETE FROM `sharing` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("deleteUpload failed, Could not query sharing table: <br />". mysql_error());
+			return 1;	//File not deleted
+		}	
+		
+		$query = "DELETE FROM `upload` WHERE `mediaid` = '$mediaid'";
+		$result = mysql_query( $query );
+		if(!$result){
+			die ("deleteUpload failed, Could not query the upload table: <br />". mysql_error());
+			return 1;	//File not deleted
+		}
+		return 0;
+}
 
 function other()
 {
@@ -298,6 +363,7 @@ function other()
 
 function send_message($to,$from,$message){
 	$to = mysql_real_escape_string($to);
+	$insert = mysql_query($query);		
 	$message = mysql_real_escape_string($message);
 	$query1 = "SELECT COUNT(*) from account where username = '$to'";
 	$result1 = mysql_query($query1);
