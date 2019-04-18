@@ -43,6 +43,18 @@ function saveDownload(id)
         $query = $query3;
         $title = "Keyword Search on '".$keyword."'";
     }
+	else if(isset($_POST['tsearch']) && $_POST['tsearch'] != ""){
+        $typeSearch = $_POST['tsearch'];
+        $query2 = "SELECT media.mediaid, media.filename, media.filepath, media.title, media.description  FROM media WHERE type='$typeSearch' ORDER BY mediaid DESC";
+        $query = $query2;
+        $title = "File Type Search ".$typeSearch;
+    }
+	else if(isset($_POST['sizeSearch']) && $_POST['sizeSearch'] != ""){
+        $sizeSearch = $_POST['sizeSearch'];
+        $query2 = "SELECT media.mediaid, media.filename, media.filepath, media.title, media.description  FROM media WHERE size < '$sizeSearch' ORDER BY size DESC";
+        $query = $query2;
+        $title = "File Size Search ".$sizeSearch;
+    }
 
     $result = mysql_query($query);
 	
@@ -109,6 +121,65 @@ function saveDownload(id)
         </div>
     </div>
 </form>
+
+<!--Search by file type-->
+			<form action="index.php" method="post">
+				<div class="container">
+					<div class ="columns">
+						<div class="column col-auto">
+							<h5>Search by File Type: </h5>
+						</div>
+						<div class="column col-auto">
+							<select name="tsearch" id="tsearch" class="form-select">
+									<option></option>
+									<option value="JPEG" selected hidden="hidden">Choose here</option>
+									<option value="image/jpeg">JPEG</option>
+									<option value="video/x-ms-wmv">WMV</option>
+									<option value="video/mp4">Mp4 Video</option>
+									<option value="audio/mpeg">Mpeg Audio</option>
+							</select>
+						</div>
+						<div class="column col-auto">
+							<input type="submit" class="btn" VALUE="Search" style="width: 200px">
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<!-- Search by file size -->
+			<form action="index.php" method="post">
+				<div class="container">
+					<div class ="columns">
+						<div class="column col-auto">
+							<h5>Search by maximum size (in bytes): </h5>
+						</div>
+						<div class="column col-auto">
+							<select name="sizeSearch" id="sizeSearch" class="form-select">
+									<option></option>
+									<option value="10000" selected hidden="hidden">Choose here</option>
+									<option value="5000000">5 Million</option>
+									<option value="3000000">3 Million</option>
+									<option value="1000000">1 Million</option>
+									<option value="500000">500000</option>
+									<option value="400000">400000</option>
+									<option value="300000">300000</option>
+									<option value="200000">200000</option>
+									<option value="100000">100000</option>
+									<option value="50000">50000</option>
+									<option value="25000">25000</option>
+									<option value="20000">20000</option>
+									<option value="15000">15000</option>
+									<option value="10000">10000</option>
+									<option value="5000">5000</option>
+							</select>
+						</div>
+						<div class="column col-auto">
+							<input type="submit" class="btn" VALUE="Search" style="width: 200px">
+						</div>
+					</div>
+				</div>
+			</form>
+			
 <form action="index.php" method="post">
     <div class="container">
         <div class ="columns">

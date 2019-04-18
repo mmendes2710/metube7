@@ -74,6 +74,19 @@ function register_ID($username,$password,$email,$type){
 		
 }
 
+function updateViewCount($mediaid)
+{
+	$query = "	update  media set viewCount = viewCount+1
+   						WHERE '$mediaid' = mediaid
+					";
+					 // Run the query created above on the database through the connection
+    $result = mysql_query( $query );
+	if (!$result)
+	{
+	   die ("updateViewCount() failed. Could not query the database: <br />". mysql_error());
+	}
+}
+
 function updateMediaTime($mediaid)
 {
 	$query = "	update  media set lastaccesstime=NOW()

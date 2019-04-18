@@ -2,12 +2,18 @@
 <?php
 	session_start();
 	include_once "function.php";
-	$currentUser=$_SESSION['username'];
+	
+	if(isset($_SESSION['username'])){
+		$currentUser=$_SESSION['username'];
 		$mediaID = $_GET['id'];
 		$permissionDenied=check_media_permission($mediaID, $currentUser);
 		if($permissionDenied){
 			header('Location: blocked.php');
 		} 
+	}
+	else{
+		//FIX guest user from index
+	}
 ?>	
 <html>
 <link rel="stylesheet" href="docs/dist/spectre.css">
@@ -17,9 +23,16 @@
 <script src="Scripts/AC_ActiveX.js" type="text/javascript"></script>
 <script src="Scripts/AC_RunActiveContent.js" type="text/javascript"></script>
 </head>
+
+<!-- Trial Home button for correct move from index in case of no login-->
+<form action="index.php" method="post">
+	<input type='submit' class='btn btn-primary' value="HOME">
+</form>
+<!-- Correct Home button
 <form action="browse.php" method="post">
 	<input type='submit' class='btn btn-primary' value="HOME">
 </form>
+//-->
 
 <body>
 
@@ -97,6 +110,7 @@ if(isset($_GET['id'])) {
 	$recomendResult = mysql_query($query9);
 
 	updateMediaTime($_GET['id']);
+	updateViewCount($_GET['id']);
 	
 	$filename=$result_row[1];
 	$filepath=$result_row[2];
