@@ -297,8 +297,23 @@ function other()
 }
 
 function send_message($to,$from,$message){
-	$query = "INSERT INTO messages VALUES('$to','$from','$message',NOW())";
-	$insert = mysql_query($query);
+	$to = mysql_real_escape_string($to);
+	$message = mysql_real_escape_string($message);
+	$query1 = "SELECT COUNT(*) from account where username = '$to'";
+	$result1 = mysql_query($query1);
+	$result_row1 = mysql_fetch_row($result1);
+	if($result_row1[0] != 1){
+		return 2; //return 2 account does not exists
+	}
+	$query2 = "SELECT COUNT(*) FROM `contacts` WHERE contactType = 'Blocked' and username='$to' and contactName='$from'";
+	$result2 = mysql_query($query2);
+	$result_row2 = mysql_fetch_row($result2);
+	if($result_row2[0] == 1){
+		return 3; //account is blocked from messaging this guy
+	}
+	
+	$query3 = "INSERT INTO messages VALUES('$to','$from','$message',NOW())";
+	$insert = mysql_query($query3);
 	if($insert == 1){
 		return 1;
 	}
