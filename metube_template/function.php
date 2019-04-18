@@ -1,9 +1,9 @@
 <?php
 include "mysqlClass.inc.php";
-
 function user_pass_check($username, $password)
 {
-	
+	$username = mysql_real_escape_string($username);
+	$password = mysql_real_escape_string($password);
 	$query = "select * from account where username='$username'";
 	$result = @mysql_query( $query );
 		
@@ -13,17 +13,21 @@ function user_pass_check($username, $password)
 	}
 	else{
 		$row = mysql_fetch_row($result);
-
 		if($row == 0) return 1;
 		
-		if(strcmp($row[1],$password))
+		if(strcmp($row[1],md5($password)))
 			return 2; //wrong password
 		else 
 			return 0; //Checked.
 	}	
 }
-
 function register_ID($username,$password,$email,$type){
+    
+	$username = mysql_real_escape_string($username);
+	$password = mysql_real_escape_string($password);
+	$password = md5($password);
+	$email = mysql_real_escape_string($email);
+
 	$query = "select count(*) from account where username='$username'";
 	$result = mysql_query( $query );
 	if(!$result){
@@ -73,7 +77,6 @@ function register_ID($username,$password,$email,$type){
 	}
 		
 }
-
 function updateViewCount($mediaid)
 {
 	$query = "	update  media set viewCount = viewCount+1
@@ -86,7 +89,6 @@ function updateViewCount($mediaid)
 	   die ("updateViewCount() failed. Could not query the database: <br />". mysql_error());
 	}
 }
-
 function updateMediaTime($mediaid)
 {
 	$query = "	update  media set lastaccesstime=NOW()
@@ -99,7 +101,6 @@ function updateMediaTime($mediaid)
 	   die ("updateMediaTime() failed. Could not query the database: <br />". mysql_error());
 	}
 }
-
 function upload_error($result)
 {
 	//view error description in http://us2.php.net/manual/en/features.file-upload.errors.php
@@ -120,7 +121,6 @@ function upload_error($result)
 		return  "Upload file failed";
 	}
 }
-
 function account_exists($username)
 {
 	$query = "select count(*) from account where username='$username'";
@@ -138,7 +138,6 @@ function account_exists($username)
 		return 0; //The contact exists
 	}
 }
-
 function contact_exists($username, $contactName)
 {
 	$query = "select count(*) from contacts where username='$username' AND contactName='$contactName'";
@@ -156,7 +155,6 @@ function contact_exists($username, $contactName)
 		return 1; //The contact is in the contacts list
 	}
 }
-
 function register_contact($username,$contactName,$contactType){
 		$query = "INSERT INTO `contacts`(`username`, `contactName`, `contactType`) VALUES ('$username','$contactName','$contactType')";
 		$result = mysql_query( $query );
@@ -168,7 +166,6 @@ function register_contact($username,$contactName,$contactType){
 		return 0; //Successful contact registry
 		}		
 }
-
 function remove_contact($username,$contactName){
 		$query = "DELETE FROM `contacts` WHERE `username` = '$username' AND `contactName` = '$contactName'";
 		$result = mysql_query( $query );
@@ -180,7 +177,6 @@ function remove_contact($username,$contactName){
 		return 0; //Successful contact removal
 		}		
 }
-
 function edit_contact($username,$contactName,$contactType){
 		$query = "UPDATE `contacts` SET `contactType` = '$contactType' WHERE `username` = '$username' AND `contactName` = '$contactName'";
 		$result = mysql_query( $query );
@@ -192,7 +188,6 @@ function edit_contact($username,$contactName,$contactType){
 		return 0; //Successful contact removal
 		}		
 }
-
 function edit_bio($username,$biotext){
 		$query = "UPDATE `biographies` SET `biographyText` = '$biotext' WHERE `username` = '$username'";
 		$result = mysql_query( $query );
@@ -204,9 +199,6 @@ function edit_bio($username,$biotext){
 		return 0; //Successful bio update
 		}		
 }
-
-
-
 //Check if a user can view a file
 function check_media_permission($mediaID, $currentUser){
 		//get the media sharetype
@@ -256,8 +248,6 @@ function check_media_permission($mediaID, $currentUser){
 			return "1";
 		}
 }
-
-
 //Displays the result of an attempted contact addition	
 function editConMess($result)
 {
@@ -278,7 +268,6 @@ function editConMess($result)
 		return "This contact was edited.";
 	}
 }
-
 function editUpload($mediaid, $title, $description, $category, $allowDisc, $allowRating, $share, $keyword){
 		$query = "UPDATE media SET title = '$title' WHERE mediaid = '$mediaid'";
 		$result = mysql_query( $query );
@@ -339,7 +328,6 @@ function editUpload($mediaid, $title, $description, $category, $allowDisc, $allo
 		}
 		return 0;
 }
-
 //Message when editing an upload's metadata
 function editUploadMess($result)
 {
@@ -352,7 +340,6 @@ function editUploadMess($result)
 		return "Error, the file was not edited";
 	}
 }
-
 function deleteUpload($mediaid){
 		$query = "DELETE FROM `media` WHERE `mediaid` = '$mediaid'";
 		$result = mysql_query( $query );
@@ -414,7 +401,6 @@ function deleteUpload($mediaid){
 		}
 		return 0;
 }
-
 //Message when deleting a file
 function deleteUploadMess($result)
 {
@@ -427,12 +413,10 @@ function deleteUploadMess($result)
 		return "Error removing the file.";
 	}
 }
-
 function other()
 {
 	//You can write your own functions here.
 }
-
 function send_message($to,$from,$message){
 	$to = mysql_real_escape_string($to);
 	$insert = mysql_query($query);		
@@ -481,7 +465,5 @@ function send_discussion($discussionid, $userId, $post){
 		die("Could not query database".mysql_error());
 	}
 }
-
-
 	
 ?>
