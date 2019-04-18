@@ -2,7 +2,12 @@
 <?php
 	session_start();
 	include_once "function.php";
-
+	$currentUser=$_SESSION['username'];
+		$mediaID = $_GET['id'];
+		$permissionDenied=check_media_permission($mediaID, $currentUser);
+		if($permissionDenied){
+			header('Location: blocked.php');
+		} 
 ?>	
 <html>
 <link rel="stylesheet" href="docs/dist/spectre.css">
