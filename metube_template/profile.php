@@ -146,10 +146,6 @@ session_start();
 	<form action="editBio.php" method="post">
 			<input type="submit" class="btn" value="Edit Bio">
 	</form>
-	<form action="edit_upload.php" method="post">
-			<input type="submit" class="btn" value="Edit an Upload">
-	</form>
-
 	
 </body>
 </html>
