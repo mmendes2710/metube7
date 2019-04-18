@@ -6,9 +6,9 @@
 <?php
     session_start();
     include_once "function.php";
-    //if(!isset($_SESSION['username'])){
-    //	header('Refresh:0; index.php');
-    //}  
+    if(!isset($_SESSION['username'])){
+    	header('Location: index.php');
+    }  
     $name = $_SESSION['username'];
     $query = "SELECT * FROM messages WHERE toUser='$name' order by time desc";
     $result = mysql_query($query);
@@ -16,7 +16,9 @@
         die("Could not query database: ".mysql_error());
     }
 ?>
-
+<form action="browse.php" method="post">
+	<input type='submit' class='btn btn-primary' value="HOME">
+</form>
 <body>
     <div class="container">
         <h1>Message Inbox </h1>

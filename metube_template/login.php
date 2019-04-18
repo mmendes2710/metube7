@@ -2,6 +2,11 @@
 <?php
     session_start();
     include_once "function.php";
+
+    if(isset($_SESSION['username'])){
+        header("Location: browse.php");
+    }
+
     if(isset($_POST['submit'])){
         if($_POST['username'] == "" || $_POST['password'] == "") {
 			echo "<script>alert('One or more forms are missing!')</script>";  

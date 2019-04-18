@@ -1,6 +1,12 @@
 <?php
 session_start();
+if(!isset($_SESSION['username'])){
+	header("Location: index.php");
+}
 ?>
+<form action="browse.php" method="post">
+	<input type='submit' class='btn btn-primary' value="HOME">
+</form>
 
 <link rel="stylesheet" href="docs/dist/spectre.css">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

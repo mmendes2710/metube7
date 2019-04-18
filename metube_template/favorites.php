@@ -2,10 +2,16 @@
 <?php
     session_start();
     include_once "function.php";
+    if(!isset($_SESSION['username'])){
+        header("Location: index.php");
+    }
 ?>
 <head>
     <link rel="stylesheet" href="docs/dist/spectre.css">
 </head>
+<form action="browse.php" method="post">
+	<input type='submit' class='btn btn-primary' value="HOME">
+</form>
 <?php
 
     if(isset($_POST['id'])){
