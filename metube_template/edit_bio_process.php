@@ -47,8 +47,11 @@ if(isset($_POST['submit'])) {
 <body>
 	<p>
 	<?php
-		$editResult = editBioMess($editBio);
-		echo "$editResult";
+		if($editBio == 0){
+			echo "Bio successfully updated";
+		} else{
+			echo "Error in bio update";
+		}
 	?>
 	</p>
 	</br>
