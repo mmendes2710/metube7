@@ -16,7 +16,13 @@
         }
         else{
             $message = send_message($_POST["toUser"],$_SESSION['username'],$_POST['toMessage']);
-            if($message == 1){
+            if($message == 3){
+                echo "<script>alert('This user has blocked you!!!')</script>";
+            }
+            else if($message == 2){
+                echo "<script>alert('This account does not exist!!!')</script>";
+            }
+            else if($message == 1){
                 echo "<script>alert('Message sent successfully')</script>";  
                 header("Location: browse.php");
             }
