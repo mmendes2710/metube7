@@ -14,6 +14,7 @@ $description=$_POST['description'];
 $category=$_POST['category'];
 $allowDisc=$_POST['allowDisc'];
 $allowRating=$_POST['allowRating'];
+$share=$_POST['sharing'];
 
 //Create Directory if doesn't exist
 $old = umask(0);
@@ -77,6 +78,10 @@ umask($old);
 						  or die("Insert into Keywords error in media_upload_process.php " .mysql_error());
 					$result="0";
 					}
+					//insert share setting onto the sharing table
+					$insertUpload="insert into sharing(setting,mediaid) values('$share','$mediaid')";
+					$queryresult = mysql_query($insertUpload)
+						  or die("Insert into view error in media_upload_process.php " .mysql_error());
 				}
 			}
 			else  

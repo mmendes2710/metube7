@@ -192,6 +192,59 @@ function edit_bio($username,$biotext){
 		}		
 }
 
+
+
+//Check if a user can view a file
+function check_media_permission($mediaID, $currentUser){
+		//get the media sharetype
+		$notInContacts = "0";
+		$query = "SELECT setting FROM sharing WHERE mediaid = '$mediaID'";
+		$sresult = mysql_query($query);
+		if (!$sresult)
+		{
+			die ("Could not query the sharing table in the database: <br />". mysql_error());
+		}
+		$result_row = mysql_fetch_row($sresult);
+		$shareSetting = $result_row[0];
+		
+		//get the media's uploader username
+		$query = "SELECT username FROM upload WHERE mediaid = '$mediaID'";
+		$userresult = mysql_query( $query );
+		if (!$userresult)
+		{
+			die ("Could not query the upload table in the database: <br />". mysql_error());
+		}
+		$result_row = mysql_fetch_row($userresult);
+		$mediaUploader = $result_row[0];
+		
+		//find the current user on the uploader's contact list
+		$query = "SELECT contactType FROM contacts WHERE contactName='$currentUser' AND username='$mediaUploader'";
+		$contactResult = mysql_query( $query );
+		if (!$contactResult)
+		{
+			$notInContacts = "1";
+			//die ("Could not query the contacts table in the database: <br />". mysql_error());
+		}
+		$result_row = mysql_fetch_row($contactResult);
+		$userStatus = $result_row[0];
+		
+		//Block the user if the media does not allow viewing
+		if($currentUser == $mediaUploader){
+			return "0";
+		} else if($userStatus == "Blocked"){
+			return "1";
+		} else if($shareSetting == "Public"){
+			return "0";
+		} else if($shareSetting == $userStatus){
+			return "0";
+		} else if($shareSetting == "Contact" && $notInContacts == "0"){
+			return "0";
+		} else{
+			return "1";
+		}
+}
+
+
 //Displays the result of an attempted contact addition	
 function editConMess($result)
 {
@@ -222,6 +275,8 @@ function editBioMess($result)
 		return "Error, your update was unsuccessful.";
 	}
 }
+
+
 
 function other()
 {

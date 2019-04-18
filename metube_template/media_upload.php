@@ -91,6 +91,21 @@ session_start();
 			<tr><td><input style="text-transform: lowercase;" type="text" name="keyword[]"></td></tr>
 			<tr><td><input style="text-transform: lowercase;" type="text" name="keyword[]"></td></tr>
 			<tr>
+				<td  width="20%">Select the sharing settings (only people in that list will be able to view it):</td>
+				<td>
+					<select name="sharing">
+						<option value="Public" selected hidden="hidden">Choose here</option>
+						<option value="Public">Public</option>
+						<option value="Private">Private</option>
+						<option value="Friend">Friends</option>
+						<option value="Family">Family</option>
+						<option value="Foe">Foes</option>
+						<option value="Favorite">Favorites</option>
+						<option value="Contact">Contacts</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
 				<td>
 					<input name = "submit" type="submit" class="btn" value="Upload">
 				</td>
