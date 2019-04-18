@@ -138,7 +138,7 @@ function saveDownload(id)
     			$query = @mysql_query("SELECT * FROM account");
 			?>
 
-			<form action="browse.php" method="post">
+			<form action="send_to_channel.php" method="post">
 				<div class="columns">
 					<div class="column col-auto">
 						<?php 

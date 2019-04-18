@@ -10,16 +10,16 @@ session_start();
 	*/
 $chaName=$_POST['chaName'];
 ?>
-<link rel="stylesheet" href="docs/dist/spectre.css">
+<link rel="stylesheet" href="../docs/dist/spectre.css">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Your Profile</title>
+    <title><?php echo $chaName?>'s Profile</title>
 </head>
 <body>
 	<h3>Welcome to <?php echo $chaName;?>'s channel</h3>
-	<a href='../browse.php' style="color:#FF9900;">Browse Media</a>
+	<a href='../index.php' style="color:#FF9900;">Browse Media</a>
 	<br/><br/>
 	
 	<?php
@@ -75,6 +75,47 @@ $chaName=$_POST['chaName'];
 				</td>
 			</tr>
 	</table>
+	
+	<!-- Show the media uploaded by this user -->
+	<?php
+		//$thisUser=$_SESSION['username'];
+		$query = "SELECT upload.mediaid, media.filename, media.filepath, media.title, media.description FROM upload INNER JOIN media ON upload.mediaid = media.mediaid WHERE username = '$thisUser'";
+		$muresult = mysql_query($query);
+		if (!$muresult)
+		{
+			die ("Could not query the upload table in the database: <br />". mysql_error());
+		}
+	?>
+	
+	<div class='container'>
+				<?php $title = $thisUser . "'s Media";?>
+				<h3><?php echo $title; ?></h3>
+				<table class="table table-striped" width="100%">
+						<thead>
+							<tr>
+							<th>Media ID</th>
+							<th>Title</th>
+							<th>File Name</th>
+							<th>Description</th>
+							<th>Download</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+									while($result_row = mysql_fetch_row($muresult)){
+										echo "<tr>";
+										echo "<td>".$result_row[0]."</td>";
+										echo "<td>".$result_row[3]."</td>";
+										//echo "<td>".$result_row[1]."</td>";
+										echo "<td><a href='../media.php?id=".$result_row[0]."' class='btn' target='_blank'>".$result_row[1]."</a></td>";
+										echo "<td>".$result_row[4]."</td>";
+										echo "<td><a href='../".$result_row[2].$result_row[1]."' class='btn' download='".$result_row[2].$result_row[1]."' target='_blank' onclick='javascript:saveDownload(".$result_row[0].");'>Download</a></td>";
+										echo "</tr>";
+									}
+							?>
+					</tbody>
+					</table>
+	</div>
 	
 </body>
 </html>

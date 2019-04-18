@@ -72,7 +72,7 @@ session_start();
 			<tr>
 				<td>Allow this video or picture to be rated?</td>
 				<td>
-				<input type="radio" name="allowRating" value="1" checked> Yes<br>
+				<input type="radio" name="allowRating" value="1" checked><br>
 				<input type="radio" name="allowRating" value="0"> No<br> 
 				</td>
 			</tr>

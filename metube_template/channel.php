@@ -10,16 +10,16 @@ session_start();
 	*/
 $chaName=$_POST['chaName'];
 ?>
-<link rel="stylesheet" href="docs/dist/spectre.css">
+<link rel="stylesheet" href="../docs/dist/spectre.css">
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Your Profile</title>
+    <title><?php echo $chaName?>'s Profile</title>
 </head>
 <body>
 	<h3>Welcome to <?php echo $chaName;?>'s channel</h3>
-	<a href='../browse.php' style="color:#FF9900;">Browse Media</a>
+	<a href='../index.php' style="color:#FF9900;">Browse Media</a>
 	<br/><br/>
 	
 	<?php
