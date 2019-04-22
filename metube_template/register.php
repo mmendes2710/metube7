@@ -24,6 +24,9 @@
     else if($_POST['lpassword'] != $_POST['clpassword']){
       echo "<script>alert('Passwords do not match!')</script>";
     }
+    else if(!filter_var($_POST['emailAddress'], FILTER_VALIDATE_EMAIL)){
+      echo "<script>alert('Email is not valid!')</script>";
+    }
     else {
       $check = register_ID($_POST['lblId'], $_POST['lpassword'], $_POST['emailAddress'], "0"); // Call functions from function.php
       if($check == 1){
